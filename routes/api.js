@@ -8,16 +8,18 @@ module.exports = function (app) {
     const unit = input.match(/(?<![a-zA-Z])(mi|km|l|gal|kg|lbs)$/gi);
     const isUnitInvalid = unit===null;
     // /0
-    const number = input.match(/^((\.?\d+(\.\d+)?(\/\d+(\.\d+)?)?)|(\d\.))(?=[a-zA-z])/g);
-    const isNumberInvalid = number===null||number[0].slice(-2)==='/0';
+    let number = input.match(/^((\.?\d+(\.\d+)?(\/\d+(\.\d+)?)?)|(\d\.))(?=[a-zA-z])/g);
+    if(unit && unit[0]===input) number = ['1'];
+    let isNumberInvalid = number === null;
+    if(number) isNumberInvalid = number[0].slice(-2) === '/0';
     if(isNumberInvalid && isUnitInvalid){
-      return res.send('Invalid number and unit');
+      return res.send('invalid number and unit');
       
     } else if(isNumberInvalid){
-      return res.send('Invalid number');
+      return res.send('invalid number');
       
     }else if(isUnitInvalid){
-      return res.send('Invalid unit');
+      return res.send('invalid unit');
       
     }
     let convertHandler = new ConvertHandler(input);

@@ -17,8 +17,8 @@ function ConvertHandler(input) {
   this.getUnit = function (input) {
     let result;
     result = input.match(/(mi|km|l|gal|kg|lbs)$/gi)[0];
-    if (result === "l") result=result.toUpperCase()
-    else if (result != "L") result=result.toLowerCase();
+    if (result === "l") result = result.toUpperCase();
+    else if (result != "L") result = result.toLowerCase();
     return result;
   };
   this.getReturnUnit = function (initUnit) {
@@ -55,7 +55,7 @@ function ConvertHandler(input) {
         result = "gallons";
         break;
       case "L":
-        result = "liter";
+        result = "liters";
         break;
       case "lbs":
         result = "pounds";

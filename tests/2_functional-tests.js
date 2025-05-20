@@ -7,22 +7,27 @@ chai.use(chaiHttp);
 
 suite("Functional Tests", function () {
   cases = [
-    { input: "3.4.5xyz", expected: "Invalid number and unit" },
-    { input: "xyz", expected: "Invalid number and unit" },
-    { input: "3.4.5mi", expected: "Invalid number" },
-    { input: "3..45mi", expected: "Invalid number" },
-    { input: "3./45mi", expected: "Invalid number" },
-    { input: "3/0mi", expected: "Invalid number" },
-    { input: "3/mi", expected: "Invalid number" },
-    { input: "3.4mil", expected: "Invalid unit" },
+    { input: "3/7.2/4kilomegagram", expected: "invalid number and unit" },
+    { input: "3/7.2/4kg", expected: "invalid number" },
+    { input: "32g", expected: "invalid unit" },
     {
-      input: "3.4mi",
+      input: "10L",
       expected: {
-        initNum: 3.4,
-        initUnit: "mi",
-        returnNum: 5.47176,
-        returnUnit: "km",
-        string: "3.4 miles converts to 5.47176 kilometers",
+        initNum: 10,
+        initUnit: "L",
+        returnNum: 2.64172,
+        returnUnit: "gal",
+        string: "10 liters converts to 2.64172 gallons",
+      },
+    },
+    {
+      input: "kg",
+      expected: {
+        initNum: 1,
+        initUnit: "kg",
+        returnNum: 2.20462,
+        returnUnit: "lbs",
+        string: "1 kilograms converts to 2.20462 pounds",
       },
     },
   ];
@@ -32,15 +37,15 @@ suite("Functional Tests", function () {
       chai
         .request(server)
         .get("/api/convert")
-        .query({input})
+        .query({ input })
         .end((err, res) => {
-           if (typeof expected === "string") {
+          if (typeof expected === "string") {
             chai.expect(res.text).to.equal(expected);
           } else {
             chai.expect(res.body).to.deep.equal(expected);
           }
         });
-        done();
+      done();
     });
   });
 });

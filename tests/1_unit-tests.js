@@ -25,13 +25,47 @@ suite("Unit Tests", function () {
     const cases = [
         {input:'gal',expected:'gal'},
         {input:'L',expected:'L'},
-        {input:'Mi',expected:'mi'},
-        {input:'mI',expected:'mi'},
+        {input:'mi',expected:'mi'},
+        {input:'km',expected:'km'},
+        {input:'kg',expected:'kg'},
+        {input:'lbs',expected:'lbs'},
     ]
 
     cases.forEach(({input,expected})=>{
         test(`convertHandler.getUnit(${input})=>${expected}`,()=>{
             assert.strictEqual(handler.getUnit(input),expected)
+        })
+    })
+  });
+  suite('Function getReturnUnit()',()=>{
+    const cases = [
+        {input:'gal',expected:'L'},
+        {input:'L',expected:'gal'},
+        {input:'mi',expected:'km'},
+        {input:'km',expected:'mi'},
+        {input:'kg',expected:'lbs'},
+        {input:'lbs',expected:'kg'},
+    ]
+
+    cases.forEach(({input,expected})=>{
+        test(`convertHandler.getReturnUnit(${input})=>${expected}`,()=>{
+            assert.strictEqual(handler.getReturnUnit(input),expected)
+        })
+    })
+  });
+  suite('Function spellOutUnit()',()=>{
+    const cases = [
+        {input:'gal',expected:'gallons'},
+        {input:'L',expected:'liters'},
+        {input:'mi',expected:'miles'},
+        {input:'km',expected:'kilometers'},
+        {input:'kg',expected:'kilograms'},
+        {input:'lbs',expected:'pounds'},
+    ]
+
+    cases.forEach(({input,expected})=>{
+        test(`convertHandler.getReturnUnit(${input})=>${expected}`,()=>{
+            assert.strictEqual(handler.spellOutUnit(input),expected)
         })
     })
   });

@@ -40,16 +40,12 @@ suite("Functional Tests", function () {
         .query({ input })
         .end((err, res) => {
           if (typeof expected === "string") {
-            chai.expect(res.text).to.equal(expected);
+            assert.strictEqual(res.text,expected);
           } else {
-            chai.expect(res.body).to.deep.equal(expected);
+            assert.deepEqual(res.body,expected);
           }
         });
       done();
     });
   });
-  after(function() {
-  chai.request(server)
-    .get('/')
-});
 });
